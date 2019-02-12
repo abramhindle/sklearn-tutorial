@@ -1,32 +1,20 @@
 #+TITLE:     Weka and Machine Learning
 #+AUTHOR:    Abram Hindle
 #+EMAIL:     abram.hindle@ualberta.ca
-#+DATE:      2013-02-15 Fri
+#+DATE:      2019-02-12 Fri
 #+DESCRIPTION: 
-#+KEYWORDS: 
-#+LANGUAGE:  en
-#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
-#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
-#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
-#+EXPORT_SELECT_TAGS: export
-#+EXPORT_EXCLUDE_TAGS: noexport
-#+LINK_UP:   
-#+LINK_HOME: 
-
-#+startup: oddeven
-
-#+startup: beamer
 #+LaTeX_CLASS: beamer
-#+LaTeX_CLASS_OPTIONS: [bigger]
-#+latex_header: \mode<beamer>{\usetheme{Madrid}}
-#+BEAMER_FRAME_LEVEL: 2
-
-#+COLUMNS: %20ITEM %13BEAMER_env(Env) %6BEAMER_envargs(Args) %4BEAMER_col(Col) %7BEAMER_extra(Extra)
+#+LaTeX_CLASS_OPTIONS: [presentation,bigger]
+#+BEAMER_THEME: default
+#+OPTIONS: H:2
 
 * Weka
 ** Licensing
    - Licensed under Creative Commons CC-BY-SA 3.0
    - Some text and images copyright Wikipedia 2012
+
+
+
 
 * Machine Learning
 ** Intro
@@ -66,10 +54,13 @@
    - Rules
    - Trees
 
+
+
+
 * Learners
 ** Learners operate on different classes and values
-   - Some learners are boolean (True/False)
-   - Some learners are class (A/B/C/..)
+   - Some learners are boolean (True/False or 0/1)
+   - Some learners are nominal (class) (A/B/C/..)
    - Some learners learn counts (1,2,3,..)
    - Some learners learn real functions (Y = b + ax)
 ** ZeroR Learner
@@ -97,35 +88,58 @@
    - nearest neighbor
    - use euclidean distance to find the 
 
-* Weka Stuff
-** ARFF Files
-   - Class should be the last element of the data
-   - Like CSV but with a type header
-   - String, Bool, Char, Class, Int, Float types
-     - note different types for different types of jobs
-
 * Evaluation/Validation
+** Matrix of classification
+   - True Positives (TP) - An action or label is properly applied
+     - A classifier for buggy code says buggy code is buggy
+   - True negative (TN)  - An action or label is properly not applied
+     - A classifier for buggy code says *NOT* buggy code is *NOT* buggy
+   - False positive (FP)  - An action or label is improperly applied
+     - A classifier for buggy code says NOT buggy code *IS* buggy
+   - False negative (FN)  - An action or label is improperly NOT applied 
+     - A classifier for buggy code says buggy code *IS NOT* buggy
 ** Accuracy
-     - How many classifications were correct?
-     - If 90% of your data is 1 class you want better than 90%
-       accuracy
-     - Bad for class imbalance
+   - Given X things how often is out automated tool right?
+   - E.g. given 100 samples of not working source code
+     - how good is our tool at fixing the source code?
+   - Answer: correct / total 
+   - TP / (TP+TN+FN+FP)
+   - TP / Everything
+   - Bad in situations where 90% of the dataset is positive
+     - you just guess positive and you get 90%!
+   - If 90% of your data is 1 class you want better than 90%
+     accuracy
+   - How many classifications were correct?
+   - Bad for class imbalance
 ** Kappa
    - Cohen's Kappa
    - like correlation
    - agreement between classifier and actual data
    - Very good for class imbalance
+   - Check it out on Wikipedia https://en.wikipedia.org/wiki/Cohen's_kappa
 ** Precision
    - How many of your classifications are right
+   - Of what was evaluated or returned what are relevant?
+     - e.g. of the buggy code snippets returned how many are actually buggy?
+   - When I give you a positive, how right am I?
+   - TP / (TP + FP)
+   - Ignores the fact that I missed lots of buggy code.
 ** Recall
    - How much of the class did you find
    - Might depend on the class
    - You can have high precision for a class and have low recall
-** F-Measure
+   - Of what was evaluated or returned did I at least return most of what was relevant?
+     - e.g. of the buggy code snippets returned did I return MOST of them
+   - Can only use when you know the population size
+   - When I return results do I return most of relevant results?
+   - TP / (TP + FN)
+** F-1 Measure
    - Combination of Precision and Recall
    - Geometric mean
    - Can tune to one or the other
-      
+   - Can I take precision and recall and balance them?
+   - F1 = 2 * Precision * Recall / ( Precision +  Recall)
+     - geometric mean of precision and recall
 ** TP/FP Rate
    - True Positives
    - True Negatives
@@ -136,3 +150,15 @@
    - sensitivity (TPR) versus specificity (TNR)
    - AUC ROC 0.5 - garbage
    - AUC ROC 0.7 - good
+** More resources
+   - The wikipedia page is actually great
+     - https://en.wikipedia.org/wiki/Precision_and_recall
+     - https://en.wikipedia.org/wiki/Cohen's_kappa
+
+* Weka Stuff
+** ARFF Files
+   - Class should be the last element of the data
+   - Like CSV but with a type header
+   - String, Bool, Char, Class, Int, Float types
+     - note different types for different types of jobs
+
