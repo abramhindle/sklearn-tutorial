@@ -2,6 +2,8 @@
 
 This is a weka tutorial with some basic datasets and some software engineering datasets for demoing ML in class
 
+Here's the tutorial: [weka.org](./weka.org)
+
 # Data
 
 * Bug triage (./data/triage/)
