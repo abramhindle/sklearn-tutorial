@@ -16,7 +16,7 @@
 
 
 
-* Machine Learning
+* Machine Learning Classifiers
 ** Intro
    - AI that learns from data
      - Learn what spam looks likes to filter it out
@@ -32,10 +32,20 @@
    - Unsupervised 
      - labels unknown, let the algorithm find them
    - Semi Supervised learning
-     - labelled and unlablled. 
+     - labelled and unlablled.
+   - Representation Learning
+     - How to represent data
    - Reinforcement Learning
      - policies to reward the learner
-** Kinds of Learners
+** WEKA
+   - ML Toolkit
+   - Good for initial exploration if something will work
+   - Can use it as a library later
+     - Java
+   - Can use it from the commandline
+   - Nice way to debug classic ML learners
+   - Major Weakness: Tuning
+** Some Kinds of Learners for Classification
    - Tree Based
      - C4.5 (J48)
      - Random Forest
@@ -47,14 +57,19 @@
    - Bayesian Nets
 ** Weka Makes some disinction
    - Bayes
+     - probabilities based on priors
    - Functions
+     - learn functions from data
    - Lazy
+     - when evaluating just go over the data again
    - Meta
+     - Combine classifiers together
    - Misc
+     - Whatever
    - Rules
+     - Learn boolean rules 
    - Trees
-
-
+     - learn decision trees
 
 
 * Learners
@@ -87,6 +102,11 @@
 ** K-NN 
    - nearest neighbor
    - use euclidean distance to find the 
+** SVM
+   - support vector machine
+   - increase the dimensionality of your data to find ways to segment it in higher dimensional space
+   - tunable. Works well.
+   - 
 
 * Evaluation/Validation
 ** Matrix of classification
@@ -154,6 +174,51 @@
    - The wikipedia page is actually great
      - https://en.wikipedia.org/wiki/Precision_and_recall
      - https://en.wikipedia.org/wiki/Cohen's_kappa
+
+* Let's Experiment!
+** Coffee Stain
+   - Find the coffee stain!
+   - 2 classes
+   - load ./data/coffee-ring/coffee-ring.arff
+   - Try ZeroR
+   - Try 1BK
+   - Try SVM
+   - Click Visualize
+** Captcha 
+   - Multiple classes (26 characters!)
+   - load ./data/captcha/char3.arff
+   - Try ZeroR
+   - Try NaiveBayes
+   - Try SVM
+** Is a document reliability relevant?
+   - load ./data/general/pgsqla_reliability_smallerdataset.arff
+   - Word based
+   - Can you predict if it is reliability related?
+   - too many features!
+** Dupe Bugs in Open Office
+   - load ./data/dupe-bugs/off_swe_-_-.arff
+   - Comparisons, can you tell which comparison will be a dupe bug or not?
+** How to handle text :( (1/2)
+   - load data/triage/data/angular.js/largewo.arff
+   - None of this is useful!
+   - delete id
+   - Filter the owner to nominal
+     - click owner
+     - Weka -> Filters -> Unsupervised -> Attribute -> StringToNomial
+       - click the arguments and change the index to 1
+       - click apply
+   - ...
+** How to handle text :( (2/2)
+   - Filter content to words!
+     - click content
+     - click filter
+       - Weka -> Filters -> Unsupervised -> Attribute -> StringToWordVector
+       - click arguments
+       - click attributeindices
+       - change to 2 or last
+       - click OK
+     - click apply
+   - Go classify and try naivebayes
 
 * Weka Stuff
 ** ARFF Files
