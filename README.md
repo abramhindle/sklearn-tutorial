@@ -4,6 +4,8 @@ This is a weka tutorial with some basic datasets and some software engineering d
 
 Here's the tutorial: [weka.org](./weka.org)
 
+Or a PDF version: [weka.pdf](./weka.pdf)
+
 # Data
 
 * Bug triage (./data/triage/)
