@@ -1,0 +1,52 @@
+#!/bin/bash
+
+. /usr/lib/java-wrappers/java-wrappers.sh
+
+# default options
+CLASS="weka.gui.GUIChooser"
+MEMORY="4g"
+GUI=""
+
+function usage()
+{
+   echo 
+   echo "usage: ${0##*/} [-m|--memory <memory>] [-h|--help] [-c|--classname <classname>] [options]"
+   echo
+   echo "Starts the Weka Machine Learning Workbench."
+   echo 
+   echo " -h,--help        this help"
+   echo
+   echo " -c,--class <class>"
+   echo "             start using an alternative class if no classname is"
+   echo "             given, then '$CLASS' is used by default."
+   echo 
+   echo " -g,--gui <MDI|SDI>"
+   echo "            start weka gui as MDI or SDI"
+   echo
+   echo " -m,--memory <memory>"
+   echo "             the amount of memory to use for the Java Virtual Machine"
+   echo "             default: 256m (= 256MB)"
+   echo 
+}
+
+
+TEMP=`getopt -o hc:m:g: --long help,class:,memory:,gui: -n 'weka' -- "$@"`
+
+if [ $? != 0 ] ; then echo "Terminating..." >&2 ; exit 1 ; fi
+eval set -- "$TEMP"
+
+while true ; do
+    case "$1" in
+        -c|--class) CLASS="$2" ; shift 2 ;;
+        -m|--memory) MEMORY="$2" ; shift 2 ;;
+        -g|--gui) GUI="-gui $2" ; shift 2 ;;
+        -h|--help) usage ; exit 1 ;;
+        --) shift ; break ;;
+        *) usage ; exit 1 ;;
+    esac
+done
+
+find_java_runtime java6 || 
+	( echo "$0: Java not found, aborting." >&2 && exit 1 )
+find_jars weka.jar libsvm.jar
+JAVA_ARGS=-Xmx$MEMORY run_java $CLASS $GUI $@
