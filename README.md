@@ -1,10 +1,6 @@
-# Weka Tutorial
+# sklearn Tutorial
 
-This is a weka tutorial with some basic datasets and some software engineering datasets for demoing ML in class
-
-Here's the tutorial: [weka.org](./weka.org)
-
-Or a PDF version: [weka.pdf](./weka.pdf)
+This is a sklearn tutorial with some basic datasets and some software engineering datasets for demoing ML in class
 
 # Data
 
